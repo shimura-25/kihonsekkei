@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスワード再設定</title>
+</head>
+<body>
+    <form method="post" th:action="@{/reset}">
+        <p>パスワード再設定用メールを送信します。<br>
+        登録しているメールを送信を入力してください。</p>
+        <label for="mailAddressReset">メールあどれす：</label>
+        <input type="text" name="mailAddressReset">
+    </form>
+    
+</body>
+</html>
