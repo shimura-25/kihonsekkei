@@ -24,12 +24,22 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+
+
+
   <body>
+    <!-- 従業員一覧のコンテナ -->
     <div class="container">
+
+      <!-- フッター -->
       <nav class="navbar navbar-default">
+
+
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
+
+
             <button
               type="button"
               class="navbar-toggle collapsed"
@@ -66,16 +76,16 @@
                 >
               </li>
             </ul>
+
+            
             <p class="navbar-text navbar-right">
-              <span th:text="${administratorName}">dummy</span>
+              <span th:text="${session.administratorName}">dummy</span>
               さんこんにちは！ &nbsp;&nbsp;&nbsp;
               
-              <a
-                href="../administrator/login.html"
+              <a href="../administrator/login.html"
                 class="navbar-link"
                 th:href="@{/logout}"
-                >ログアウト</a
-              >
+                >ログアウト</a>
             </p>
           </div>
           <!-- /.navbar-collapse -->
