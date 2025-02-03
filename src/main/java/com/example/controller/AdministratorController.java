@@ -117,6 +117,7 @@ public class AdministratorController {
 
 		//セッションに取得したメールアドレスを格納する
 		session.setAttribute("administratorName", form.getMailAddress());
+		//セッションに入っている状態とはどういう状態か
 
 		return "redirect:/employee/showList";
 	}
