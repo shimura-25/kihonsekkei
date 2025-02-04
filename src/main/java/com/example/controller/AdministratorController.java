@@ -3,13 +3,11 @@ package com.example.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.Administrator;
@@ -18,7 +16,7 @@ import com.example.form.LoginForm;
 import com.example.service.AdministratorService;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 
 
 /**
@@ -77,7 +75,17 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@PostMapping("/insert")
-	public String insert(InsertAdministratorForm form) {
+	public String insert(@Valid InsertAdministratorForm form, BindingResult bindingResult) {
+		
+
+		if (administratorService.isMailAddressDuplicate(form.getMailAddress())) {
+			bindingResult.rejectValue("mailAddress", "error.duplicate", "メールアドレスが重複しています");
+		}
+
+		if(bindingResult.hasErrors()){
+			return "administrator/insert";
+		}
+		
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
@@ -105,19 +113,23 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@PostMapping("/login")
-	public String login(LoginForm form, RedirectAttributes redirectAttributes) {
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+	
+	//	formレデクトリのなかのLoginFormクラスを使用(管理者情報用フォーム)
+	//RedirectAttributesはリダイレクト後に一度だけ表示させるためのもの
+	//Httpsessionはセッションを使えるようにするクラス
+	public String login(LoginForm form, RedirectAttributes redirectAttributes, HttpSession session) {
+		//Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+		Administrator administrator = administratorService.login(form.getName(), form.getMailAddress(), form.getPassword());
+
 		if (administrator == null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
+			
 			return "redirect:/";
 		}
 
-		//これどのタイミングでスコープに入れてるの？もしかしていれてない？
-
-		//リクエストスコープにメールアドレスを保存
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		attr.getRequest().setAttribute("mailAdress", form.getMailAddress());		//引数をスコープにセット
-
+		//セッションに取得したメールアドレスを格納する
+		session.setAttribute("administratorName", administrator.getName());
+		//セッションに入っている状態とはどういう状態か
 
 		return "redirect:/employee/showList";
 	}

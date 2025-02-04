@@ -20,6 +20,10 @@ public class AdministratorService {
 	@Autowired
 	private AdministratorRepository administratorRepository;
 
+	public boolean isMailAddressDuplicate(String mailAddress) {
+        return administratorRepository.findByMailAddress(mailAddress) != null;
+    }
+
 	/**
 	 * 管理者情報を登録します.
 	 * 
@@ -32,12 +36,13 @@ public class AdministratorService {
 	/**
 	 * ログインをします.
 	 * 
+	 * @param name
 	 * @param mailAddress メールアドレス
 	 * @param password    パスワード
 	 * @return 管理者情報 存在しない場合はnullが返ります
 	 */
-	public Administrator login(String mailAddress, String password) {
-		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
+	public Administrator login(String name, String mailAddress, String password) {
+		Administrator administrator = administratorRepository.findByMailAddressAndPassward(name, mailAddress, password);
 		return administrator;
 	}
 }
