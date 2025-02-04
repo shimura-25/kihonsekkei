@@ -95,13 +95,9 @@
 
       <!-- 演習２　検索窓を追加する -->
       <!-- actionは連携するメソッドを入れる -->
-       <form method="post" th:action="@{/serch}">
+       <form method="post" th:action="@{/employee/search}" th:object="${nameSearchForm}">
           
-          <input 
-            type="text" 
-            name="whoname" 
-            id="whoname"
-          >
+          <input type="text" th:field="*{whoname}">
           <button type="submit">検索</button>
 
        </form>

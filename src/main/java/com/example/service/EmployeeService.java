@@ -55,10 +55,10 @@ public class EmployeeService {
 	}
 
 	//課題：名前検索機能を追加
-	public List<Employee> serchWho(String word){
+	public List<Employee> searchWho(String word){
 
 		
-		List<Employee> employeeList = employeeRepository.serchWho(word);
+		List<Employee> employeeList = employeeRepository.searchWho(word);
 		return employeeList;
 	}
 	

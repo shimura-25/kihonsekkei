@@ -85,13 +85,18 @@ public class EmployeeRepository {
 	}
 
 	//課題：名前検索をします
-	public List<Employee> serchWho(String word){
+	public List<Employee> searchWho(String word){	//プレイスホルダーを使う
 
 		//sql
-		String sql = "SELECT name FROM employee WHERE name LIKE '%" + word + "%'";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count " +
+		"FROM employees WHERE name LIKE :word";
 
-		List<Employee> serchList = template.query(sql, EMPLOYEE_ROW_MAPPER);
+		//chatGPDの解答
+		//String sql = "SELECT id, name, salary, dependents_count FROM employees WHERE name LIKE ?";
+        //return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Employee.class), "%" + name + "%");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("word", "%" + word + "%");
+		List<Employee> searchList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
 
-		return serchList;
+		return searchList;
 	}
 }

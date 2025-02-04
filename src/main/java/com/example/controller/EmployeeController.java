@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.Employee;
-import com.example.form.NameSerchForm;
+import com.example.form.NameSearchForm;
 import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
 
@@ -40,6 +40,12 @@ public class EmployeeController {
 		return new UpdateEmployeeForm();
 	}
 
+	//チャットGPD様のお力を拝借。名前検索に使用
+	@ModelAttribute
+	public NameSearchForm setUpSearchForm() {
+		return new NameSearchForm();
+	}
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員一覧を表示する
 	/////////////////////////////////////////////////////
@@ -61,13 +67,16 @@ public class EmployeeController {
 	/// 課題：名前検索を追加する
 	/////////////////////////////////////////////////////
 	
-	@PostMapping("/serch")
-	public String nameSerch(NameSerchForm form, Model model) {
+
+
+	
+	@PostMapping("/search")
+	public String nameSearch(@ModelAttribute NameSearchForm form, Model model) {
 
 		String word = form.getWhoname();
 
 		//domainのメソッドにFormでgetした値を入れる
-		List<Employee> employeeList = employeeService.serchWho(word);
+		List<Employee> employeeList = employeeService.searchWho(word);
 		model.addAttribute("employeeList", employeeList);
 	
 		return "employee/list";		//該当者のみ表示にする
