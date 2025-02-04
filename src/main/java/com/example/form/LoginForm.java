@@ -8,8 +8,20 @@ package com.example.form;
  */
 public class LoginForm {
 
+	/** 名前 */
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	/** メールアドレス */
 	private String mailAddress;
+
 	/** パスワード */
 	private String password;
 
