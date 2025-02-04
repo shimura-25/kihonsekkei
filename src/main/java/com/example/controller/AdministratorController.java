@@ -107,7 +107,7 @@ public class AdministratorController {
 	//Httpsessionはセッションを使えるようにするクラス
 	public String login(LoginForm form, RedirectAttributes redirectAttributes, HttpSession session) {
 		//Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+		Administrator administrator = administratorService.login(form.getName(), form.getMailAddress(), form.getPassword());
 
 		if (administrator == null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
@@ -116,7 +116,7 @@ public class AdministratorController {
 		}
 
 		//セッションに取得したメールアドレスを格納する
-		session.setAttribute("administratorName", form.getMailAddress());
+		session.setAttribute("administratorName", administrator.getName());
 		//セッションに入っている状態とはどういう状態か
 
 		return "redirect:/employee/showList";
