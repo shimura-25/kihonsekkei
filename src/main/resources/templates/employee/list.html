@@ -93,6 +93,19 @@
         <!-- /.container-fluid -->
       </nav>
 
+      <!-- 演習２　検索窓を追加する -->
+      <!-- actionは連携するメソッドを入れる -->
+       <form method="post" th:action="@{/serch}">
+          
+          <input 
+            type="text" 
+            name="whoname" 
+            id="whoname"
+          >
+          <button type="submit">検索</button>
+
+       </form>
+
       <!-- パンくずリスト -->
       <ol class="breadcrumb">
         <li class="active">

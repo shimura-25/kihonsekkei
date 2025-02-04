@@ -1,7 +1,5 @@
 package com.example.domain;
 
-//domainはDBとやりとりをするところ
-
 /**
  * 管理者情報を表すドメイン.
  * 

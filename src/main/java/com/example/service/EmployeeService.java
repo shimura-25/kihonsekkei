@@ -28,9 +28,10 @@ public class EmployeeService {
 	 * @return 従業員情報一覧
 	 */
 	public List<Employee> showList() {
-		List<Employee> employeeList = employeeRepository.findAll();
+		List<Employee> employeeList = employeeRepository.findAll();	//repositoryのメソッド
 		return employeeList;
 	}
+
 
 	/**
 	 * 従業員情報を取得します.
@@ -52,4 +53,13 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+
+	//課題：名前検索機能を追加
+	public List<Employee> serchWho(String word){
+
+		
+		List<Employee> employeeList = employeeRepository.serchWho(word);
+		return employeeList;
+	}
+	
 }

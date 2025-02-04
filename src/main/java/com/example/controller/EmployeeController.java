@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.Employee;
+import com.example.form.NameSerchForm;
 import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
+
 
 /**
  * 従業員情報を操作するコントローラー.
@@ -54,6 +56,23 @@ public class EmployeeController {
 
 		return "employee/list";
 	}
+
+	/////////////////////////////////////////////////////
+	/// 課題：名前検索を追加する
+	/////////////////////////////////////////////////////
+	
+	@PostMapping("/serch")
+	public String nameSerch(NameSerchForm form, Model model) {
+
+		String word = form.getWhoname();
+
+		//domainのメソッドにFormでgetした値を入れる
+		List<Employee> employeeList = employeeService.serchWho(word);
+		model.addAttribute("employeeList", employeeList);
+	
+		return "employee/list";		//該当者のみ表示にする
+	}
+	
 
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を表示する

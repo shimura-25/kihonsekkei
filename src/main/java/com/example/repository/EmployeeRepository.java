@@ -83,4 +83,15 @@ public class EmployeeRepository {
 		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
 		template.update(updateSql, param);
 	}
+
+	//課題：名前検索をします
+	public List<Employee> serchWho(String word){
+
+		//sql
+		String sql = "SELECT name FROM employee WHERE name LIKE '%" + word + "%'";
+
+		List<Employee> serchList = template.query(sql, EMPLOYEE_ROW_MAPPER);
+
+		return serchList;
+	}
 }
